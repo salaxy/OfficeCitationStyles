@@ -749,7 +749,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
               <xsl:text>et al.</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:apply-templates select="."/>
+              <xsl:apply-templates select="b:Author/b:Author/b:Person/b:Last"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>
@@ -763,7 +763,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-    <xsl:value-of select="b:Corporate"/>
+    <!--xsl:value-of select="b:Last"/-->
   </xsl:template>
   
   <!-- Lange Autorenliste für Quellverzeichnis-->
@@ -807,18 +807,21 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 
   <!--### Abschnitt 6: Hier wird festgelegt, wie der Name einer Einzelnen Person aufgebaut ist.###-->
   <!-- Beispiel: "Vorname Vorname2 Nachname" -->
-  <xsl:template match="b:Person">
-    <xsl:if test="b:First != ''">
-      <xsl:value-of select = "b:First"/>
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:if test="b:Middle != ''">
-      <xsl:value-of select = "b:Middle"/>
-      <xsl:text> </xsl:text>
-    </xsl:if>
+  <xsl:template match="b:PersonCitation">
     <xsl:if test="b:Last != ''">
       <xsl:value-of select = "b:Last"/>
     </xsl:if>
+  </xsl:template>
+  
+    <xsl:template match="b:Person">
+		<xsl:if test="b:Last != ''">
+		  <xsl:value-of select = "b:Last"/>
+		</xsl:if>
+		<xsl:if test="b:First != ''">
+		<!-- TODO nur ersten Buchstaben z.B. C. -->
+		<!--xsl:value-of select = "b:First"/-->
+		<xsl:text> C.</xsl:text>
+		</xsl:if>
   </xsl:template>
 
   <xsl:template match = "text()"/>
