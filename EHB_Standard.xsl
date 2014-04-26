@@ -9,8 +9,7 @@
 
  
   <!--### Abschnitt 0: Grundlegende Einstellungen zur Style-Datei.###-->
-  <xsl:variable name="CRLF" select="'&#O13;&#O1O;'" />
- 
+  
   <!--Ausgabe als HTML -->
   <xsl:output method = "html" encoding = "us-ascii"/>
 
@@ -585,7 +584,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 	  <xsl:text>. </xsl:text>
 	  <!--URL-->
 	  <span>
-		<xsl:text>Internet: </xsl:text>
+		<xsl:text> Internet: </xsl:text>
         <xsl:value-of select = "b:URL"/>
 	  </span>
       <!--Zugriffs-Datum-->
@@ -630,7 +629,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 		<xsl:if test="b:Source[b:SourceType = 'Article'] != '' or b:Source[b:SourceType = 'ArticleInAPeriodical'] != ''">
 			<p style="font-family: Times New Roman; font-size: 12pt; font-weight: bold; font-style: italic;">
 				<span>
-					<xsl:text>Aritkel</xsl:text>
+					<xsl:text>Artikel</xsl:text>
 				</span>
 			</p>
 			<xsl:apply-templates select = "b:Source[b:SourceType = 'Article'] | b:Source[b:SourceType = 'ArticleInAPeriodical'] ">
