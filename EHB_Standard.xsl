@@ -804,6 +804,8 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     </xsl:for-each>
     <xsl:value-of select="b:Corporate"/>
   </xsl:template>
+  
+
 
   <!--### Abschnitt 6: Hier wird festgelegt, wie der Name einer Einzelnen Person aufgebaut ist.###-->
   <!-- Beispiel: "Vorname Vorname2 Nachname" -->
@@ -819,13 +821,15 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
   </xsl:template>
   
     <xsl:template match="b:Person" mode="Bibliography">
+	   <xsl:variable name="vLower" select="'abcdefghijklmnopqrstuvwxyz'"/>
+		<xsl:variable name="vUpper" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
 		<xsl:if test="b:Last != ''">
 		  <xsl:value-of select = "b:Last"/>
 		</xsl:if>
 		<xsl:if test="b:First != ''">
-		<!-- TODO nur ersten Buchstaben z.B. C. -->
-		<!--xsl:value-of select = "b:First"/-->
-		<xsl:text> C.</xsl:text>
+		<xsl:text> </xsl:text>
+		 <xsl:value-of select="substring(.,1,1)"/>
+  		<xsl:text>.</xsl:text>
 		</xsl:if>
   </xsl:template>
 
