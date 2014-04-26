@@ -481,7 +481,6 @@
     </b:ImportantFields>
   </xsl:template>
 
-
   <!--### Abschnitt 2: Hier wird festgelegt, wie die einzelnen Quellen im Literaturverzeichnis
     ausgegeben werden sollen. Hier sind noch nicht alle Arten von Quellen eingetragen.
     Ggf. müssen die entsprechenden Quellenarten noch hinzugefügt werden.###-->
@@ -491,9 +490,9 @@
   <xsl:template match = "b:Source[b:SourceType = 'Interview']">
     <p style="font-family: Times New Roman; font-size: 12pt;">
       <span style="font-weight: bold; ">
-        <xsl:text>[</xsl:text>
+        <xsl:text>(</xsl:text>
         <xsl:value-of select = "b:Tag"/>
-        <xsl:text>] </xsl:text>
+        <xsl:text>) </xsl:text>
       </span>
       <!-- Autorenliste-->
       <xsl:apply-templates select="b:Author/b:Interviewee" mode="IntervieweeNamelistFull" />
@@ -515,6 +514,8 @@
   </xsl:template>
 
   <!--So werden Bücher, Berichte und elektronische Quellen ausgegeben -->
+  <!--Friedemann M.-L./Köhlen C. (2010): Familien- und umweltbezogene Pflege. Die
+Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
   <xsl:template match = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
     <p style="font-family: Times New Roman; font-size: 12pt;">
       <span style="font-weight: bold; ">
@@ -525,6 +526,9 @@
       <!--Autorenliste-->
       <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
       <xsl:text>: </xsl:text>
+	  <xsl:text> (</xsl:text>
+	  <xsl:value-of select = "b:Year"/>
+	  <xsl:text>)</xsl:text>
       <!--Titel-->
       <xsl:value-of select = "b:Title"/>
       <!--Datum-->
@@ -533,6 +537,33 @@
       <xsl:text>, </xsl:text>
       <xsl:value-of select = "b:Year"/>
       <xsl:text>).</xsl:text>
+    </p>
+  </xsl:template>
+  
+    <!-- Zeitschriftenartikel-->
+  <!-- Füsgen I. (2004): Prävention von Harninkontinenz. Risikofaktoren rechtzeitig erkennen.
+    In: Pflegen ambulant., 15. Jg., H. 4, S. 13-15 -->
+  <xsl:template match = "b:Source[b:SourceType = 'Article'] | b:Source[b:SourceType = 'ArticleInAPeriodical']">
+    <p style="font-family: Times New Roman; font-size: 12pt;">
+		<span style="font-weight: bold; ">
+		  <!--Autorenliste-->
+		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
+		  <xsl:text> (</xsl:text>
+		  <xsl:value-of select = "b:Year"/>
+		  <xsl:text>)</xsl:text>
+		</span>
+		<xsl:text>: </xsl:text>
+		<!--Titel-->
+		<xsl:value-of select = "b:Title"/>
+		<xsl:text>.</xsl:text>
+		<!-- Jahrgang etc.-->
+		<xsl:text>, </xsl:text>
+		<xsl:value-of select = "b:Volume"/>
+		<xsl:text>, </xsl:text>
+		<xsl:if test="b:Pages != ''">
+			<xsl:text>S. </xsl:text>
+			<xsl:value-of select = "b:Pages"/>
+		</xsl:if>
     </p>
   </xsl:template>
 
@@ -655,6 +686,9 @@
         <!-- <xsl:text>, </xsl:text> -->
         <!-- <xsl:value-of select = "b:Year"/> -->
         <!--und noch die Seiten, wenn sie angegeben wurden-->
+				
+      <!--xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" /-->
+      <xsl:text>: </xsl:text>
         <xsl:if test="../b:Pages != ''">
           <xsl:text>, S. </xsl:text>
           <xsl:value-of select = "../b:Pages"/>
