@@ -9,6 +9,7 @@
 
  
   <!--### Abschnitt 0: Grundlegende Einstellungen zur Style-Datei.###-->
+  <xsl:variable name="CRLF" select="'&#O13;&#O1O;'" />
  
   <!--Ausgabe als HTML -->
   <xsl:output method = "html" encoding = "us-ascii"/>
@@ -517,7 +518,8 @@
   <!--Friedemann M.-L./Köhlen C. (2010): Familien- und umweltbezogene Pflege. Die
 Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
   <xsl:template match = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
-    <p style="font-family: Times New Roman; font-size: 12pt;">
+    <p style="font-family: Times New Roman; font-size: 12pt; ">
+	<!-- ATTRIBUT text-align: left; ??-->
 		<span style="font-weight: bold; ">
 			<!--Autorenliste-->
 			<xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
@@ -620,7 +622,19 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 				</span>
 			</p>
 			<xsl:apply-templates select = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
-				<xsl:sort select="b:Tag" order="ascending"/>
+				<xsl:sort select="b:Author" order="ascending"/>
+			</xsl:apply-templates>
+		</xsl:if>
+		
+		<!-- Artikel-->
+		<xsl:if test="b:Source[b:SourceType = 'Article'] != '' or b:Source[b:SourceType = 'ArticleInAPeriodical'] != ''">
+			<p style="font-family: Times New Roman; font-size: 12pt; font-weight: bold; font-style: italic;">
+				<span>
+					<xsl:text>Aritkel</xsl:text>
+				</span>
+			</p>
+			<xsl:apply-templates select = "b:Source[b:SourceType = 'Article'] | b:Source[b:SourceType = 'ArticleInAPeriodical'] ">
+				<xsl:sort select="b:Author" order="ascending"/>
 			</xsl:apply-templates>
 		</xsl:if>
 		
@@ -632,7 +646,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 				</span>
 			</p>
 			<xsl:apply-templates select = "b:Source[b:SourceType = 'InternetSite'] | b:Source[b:SourceType = 'DocumentFromInternetSite']">
-				<xsl:sort select="b:Tag" order="ascending"/>
+				<xsl:sort select="b:Author" order="ascending"/>
 			</xsl:apply-templates>
 		</xsl:if>
 
@@ -644,7 +658,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 				</span>
 			</p>			
 			<xsl:apply-templates select = "b:Source[b:SourceType = 'Interview']">
-				<xsl:sort select="b:Tag" order="ascending"/>
+				<xsl:sort select="b:Author" order="ascending"/>
 			</xsl:apply-templates>
         </xsl:if>
       </body>
@@ -701,7 +715,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     <xsl:for-each select="b:NameList/b:Person">
       <xsl:apply-templates select="."/>
       <xsl:if test="position() != last()">
-        <xsl:text>, </xsl:text>
+        <xsl:text>; </xsl:text>
       </xsl:if>
     </xsl:for-each>
     <xsl:value-of select="b:Corporate"/>
