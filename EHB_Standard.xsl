@@ -520,7 +520,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     <p style="font-family: Times New Roman; font-size: 12pt;">
       <span style="font-weight: bold; ">
         <xsl:text>[</xsl:text>
-        <xsl:value-of select = "b:Tag"/>
+        <xsl:value-of select = "b:Year"/>
         <xsl:text>] </xsl:text>
       </span>
       <!--Autorenliste-->
@@ -567,40 +567,29 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     </p>
   </xsl:template>
 
-  <!--So werden Webseiten und Dokumente von Webseiten ausgegeben -->
+  <!--So werden Webseiten und Dokumente von Webseiten ausgegeben
+  University of Zurich, Department of Geography (Hrsg.) (1997): Leitfaden wiss. Arbeiten.
+  Internet: http://www.geo.unizh.ch/gis/leitf/leitf_home.html (Zugriff: 24.08.1999).-->
   <xsl:template match = "b:Source[b:SourceType = 'InternetSite'] | b:Source[b:SourceType = 'DocumentFromInternetSite']">
     <p style="font-family: Times New Roman; font-size: 12pt;">
       <span style="font-weight: bold;">
-        <xsl:text>[</xsl:text>
-        <xsl:value-of select = "b:Tag"/>
-        <xsl:text>] </xsl:text>
+		  <!--Autorenliste-->
+		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
+		  <xsl:if test="b:Year != ''">
+			  <xsl:text> (</xsl:text>
+			  <xsl:value-of select = "b:Year"/>
+			  <xsl:text>)</xsl:text>
+		  </xsl:if>
       </span>
-      <!--Autorenliste-->
-      <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
       <!--Titel-->
       <xsl:text>: </xsl:text>
       <xsl:value-of select = "b:Title"/>
-      <!--Datum-->
-	  <xsl:if test="b:Year != ''">
-	    <xsl:text> (</xsl:text>
-		<xsl:if test="b:Day != ''">
-			<xsl:value-of select = "b:Day"/>
-			<xsl:text>.</xsl:text>
-		</xsl:if>
-		<xsl:if test="b:Month != ''">
-			<xsl:value-of select = "b:Month"/>
-			<xsl:text>.</xsl:text>
-		</xsl:if>
-		<xsl:value-of select = "b:Year"/>
-		<xsl:text>) </xsl:text>
-	  </xsl:if>
-      <br />
-      <!--URL-->
-      <span>
-        <xsl:text>[</xsl:text>
+	  <xsl:text>. </xsl:text>
+	  <!--URL-->
+	  <span>
+		<xsl:text>Internet: </xsl:text>
         <xsl:value-of select = "b:URL"/>
-        <xsl:text>]</xsl:text>
-      </span>
+	  </span>
       <!--Zugriffs-Datum-->
       <span>
 	  <xsl:if test="b:YearAccessed != ''">
