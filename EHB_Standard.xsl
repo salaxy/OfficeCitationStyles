@@ -491,9 +491,9 @@
   <xsl:template match = "b:Source[b:SourceType = 'Interview']">
     <p style="font-family: Times New Roman; font-size: 12pt;">
       <span style="font-weight: bold; ">
-        <xsl:text>(</xsl:text>
+        <xsl:text>[</xsl:text>
         <xsl:value-of select = "b:Tag"/>
-        <xsl:text>) </xsl:text>
+        <xsl:text>] </xsl:text>
       </span>
       <!-- Autorenliste-->
       <xsl:apply-templates select="b:Author/b:Interviewee" mode="IntervieweeNamelistFull" />
@@ -515,89 +515,61 @@
   </xsl:template>
 
   <!--So werden Bücher, Berichte und elektronische Quellen ausgegeben -->
-  <!--Friedemann M.-L./Köhlen C. (2010): Familien- und umweltbezogene Pflege. Die
-Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
   <xsl:template match = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
     <p style="font-family: Times New Roman; font-size: 12pt;">
       <span style="font-weight: bold; ">
-		  <!--Autorenliste-->
-		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
-				<xsl:variable name="cAuthors">
-					<xsl:call-template name="MainContributors">
-					<xsl:with-param name="returnType" select="'Count'"/>
-				</xsl:call-template>
-				</xsl:variable>
-		  <xsl:text> (</xsl:text>
-		  <xsl:value-of select = "b:Year"/>
-		  <xsl:text>)</xsl:text>
-	  </span>
-		<xsl:text>: </xsl:text>
-		 <!--Titel-->
-		 <xsl:value-of select = "b:Title"/>
-		 <xsl:text>. </xsl:text>
-		 <xsl:if test="b:City != ''">
-			  <xsl:value-of select = "b:City"/>
-			  <xsl:text>: </xsl:text>
-		</xsl:if>
-      <xsl:value-of select = "b:Publisher"/>
-    </p>
-  </xsl:template>
-  
-  <!-- Zeitschriftenartikel-->
-  <!-- Füsgen I. (2004): Prävention von Harninkontinenz. Risikofaktoren rechtzeitig erkennen.
-    In: Pflegen ambulant., 15. Jg., H. 4, S. 13-15 -->
-  <xsl:template match = "b:Source[b:SourceType = 'Article'] | b:Source[b:SourceType = 'ArticleInAPeriodical']">
-    <p style="font-family: Times New Roman; font-size: 12pt;">
-		<span style="font-weight: bold; ">
-		  <!--Autorenliste-->
-		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
-		  <xsl:text> (</xsl:text>
-		  <xsl:value-of select = "b:Year"/>
-		  <xsl:text>)</xsl:text>
-		</span>
-		<xsl:text>: </xsl:text>
-		<!--Titel-->
-		<xsl:value-of select = "b:Title"/>
-		<xsl:text>.</xsl:text>
-		<!-- Jahrgang etc.-->
-		<xsl:text>, </xsl:text>
-		<xsl:value-of select = "b:Volume"/>
-		<xsl:text>, </xsl:text>
-		<xsl:if test="b:Pages != ''">
-			<xsl:text>S. </xsl:text>
-			<xsl:value-of select = "b:Pages"/>
-		</xsl:if>
+        <xsl:text>[</xsl:text>
+        <xsl:value-of select = "b:Tag"/>
+        <xsl:text>] </xsl:text>
+      </span>
+      <!--Autorenliste-->
+      <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
+      <xsl:text>: </xsl:text>
+      <!--Titel-->
+      <xsl:value-of select = "b:Title"/>
+      <!--Datum-->
+      <xsl:text> (</xsl:text>
+      <xsl:value-of select = "b:City"/>
+      <xsl:text>, </xsl:text>
+      <xsl:value-of select = "b:Year"/>
+      <xsl:text>).</xsl:text>
     </p>
   </xsl:template>
 
-  <!--So werden Webseiten und Dokumente von Webseiten ausgegeben
-  University of Zurich, Department of Geography (Hrsg.) (1997): Leitfaden wiss. Arbeiten.
-  Internet: http://www.geo.unizh.ch/gis/leitf/leitf_home.html (Zugriff: 24.08.1999).
-  -->
+  <!--So werden Webseiten und Dokumente von Webseiten ausgegeben -->
   <xsl:template match = "b:Source[b:SourceType = 'InternetSite'] | b:Source[b:SourceType = 'DocumentFromInternetSite']">
     <p style="font-family: Times New Roman; font-size: 12pt;">
       <span style="font-weight: bold;">
-		  <!--Autorenliste-->
-		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
-		  <xsl:if test="b:Year != ''">
-			  <xsl:text> (</xsl:text>
-			  <xsl:value-of select = "b:Year"/>
-			  <xsl:text>)</xsl:text>
-		  </xsl:if>
+        <xsl:text>[</xsl:text>
+        <xsl:value-of select = "b:Tag"/>
+        <xsl:text>] </xsl:text>
       </span>
-	  
+      <!--Autorenliste-->
+      <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
       <!--Titel-->
       <xsl:text>: </xsl:text>
       <xsl:value-of select = "b:Title"/>
-	  <xsl:text>. </xsl:text>
-
-
-	  <!--URL-->
-	  <span>
-		<xsl:text>Internet: </xsl:text>
+      <!--Datum-->
+	  <xsl:if test="b:Year != ''">
+	    <xsl:text> (</xsl:text>
+		<xsl:if test="b:Day != ''">
+			<xsl:value-of select = "b:Day"/>
+			<xsl:text>.</xsl:text>
+		</xsl:if>
+		<xsl:if test="b:Month != ''">
+			<xsl:value-of select = "b:Month"/>
+			<xsl:text>.</xsl:text>
+		</xsl:if>
+		<xsl:value-of select = "b:Year"/>
+		<xsl:text>) </xsl:text>
+	  </xsl:if>
+      <br />
+      <!--URL-->
+      <span>
+        <xsl:text>[</xsl:text>
         <xsl:value-of select = "b:URL"/>
-	  </span>
-
+        <xsl:text>]</xsl:text>
+      </span>
       <!--Zugriffs-Datum-->
       <span>
 	  <xsl:if test="b:YearAccessed != ''">
@@ -632,19 +604,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 				</span>
 			</p>
 			<xsl:apply-templates select = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
-				<xsl:sort select="b:Author" order="ascending"/>
-			</xsl:apply-templates>
-		</xsl:if>
-		
-		<!-- Aritkel-->
-		<xsl:if test="b:Source[b:SourceType = 'Article'] != '' or b:Source[b:SourceType = 'ArticleInAPeriodical'] != ''">
-			<p style="font-family: Times New Roman; font-size: 12pt; font-weight: bold; font-style: italic;">
-				<span>
-					<xsl:text>Aritkel</xsl:text>
-				</span>
-			</p>
-			<xsl:apply-templates select = "b:Source[b:SourceType = 'Article'] | b:Source[b:SourceType = 'ArticleInAPeriodical'] ">
-				<xsl:sort select="b:Author" order="ascending"/>
+				<xsl:sort select="b:Tag" order="ascending"/>
 			</xsl:apply-templates>
 		</xsl:if>
 		
@@ -656,7 +616,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 				</span>
 			</p>
 			<xsl:apply-templates select = "b:Source[b:SourceType = 'InternetSite'] | b:Source[b:SourceType = 'DocumentFromInternetSite']">
-				<xsl:sort select="b:Author" order="ascending"/>
+				<xsl:sort select="b:Tag" order="ascending"/>
 			</xsl:apply-templates>
 		</xsl:if>
 
@@ -668,10 +628,9 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 				</span>
 			</p>			
 			<xsl:apply-templates select = "b:Source[b:SourceType = 'Interview']">
-				<xsl:sort select="b:Author" order="ascending"/>
+				<xsl:sort select="b:Tag" order="ascending"/>
 			</xsl:apply-templates>
         </xsl:if>
-		
       </body>
     </html>
   </xsl:template>
@@ -681,23 +640,21 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 
   <xsl:template match = "b:Citation/b:Source">
     <html xmlns = "http://www.w3.org/TR/REC-html40">
-      <body>		  
-	  <xsl:text>(</xsl:text>
+      <body>
         <span>
-		<!-- (Meier 2011, S. 3)-->
-          <!--xsl:value-of select = "b:Author"/-->
-		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistShort" />
-		  <xsl:text> </xsl:text>
-		  <xsl:value-of select = "b:Year"/>
+		  <xsl:text>(</xsl:text>
+          <xsl:text>[</xsl:text>
+          <xsl:value-of select = "b:Tag"/>
+          <xsl:text>]</xsl:text>
         </span>
-        <!-- Anschließend kommen der/die Autoren -->
-        <!-- Anmerkung: Wie die Liste genau aufgebaut ist, steht in Abschnitt 5 -->
-        <!-- <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistVeryShort" /> -->
+        <!-- Anschließend kommen der/die Autoren-->
+        <!--Anmerkung: Wie die Liste genau aufgebaut ist, steht in Abschnitt 5 -->
+        <!--<xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistVeryShort" /> -->
         <!-- <xsl:apply-templates select="b:Author/b:Interviewee" mode="AuthorNamelistVeryShort" /> -->
-        <!-- Schließlich kommt das Datum-->
+        <!--Schließlich kommt das Datum-->
         <!-- <xsl:text>, </xsl:text> -->
         <!-- <xsl:value-of select = "b:Year"/> -->
-        <!-- und noch die Seiten, wenn sie angegeben wurden -->
+        <!--und noch die Seiten, wenn sie angegeben wurden-->
         <xsl:if test="../b:Pages != ''">
           <xsl:text>, S. </xsl:text>
           <xsl:value-of select = "../b:Pages"/>
@@ -745,12 +702,12 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>
-        <xsl:when test="position() < 3">
+        <xsl:when test="position() > 3">
         </xsl:when>
         <xsl:otherwise>
-          <!--xsl:apply-templates select="."/-->
-          <xsl:if test="position() != last()-1">
-            <xsl:text> und </xsl:text>
+          <xsl:apply-templates select="."/>
+          <xsl:if test="position() != last()">
+            <xsl:text>, </xsl:text>
           </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
@@ -760,22 +717,17 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 
   <!-- Sehr kurze Autorenliste(wenn mehr als 1 Autor vorhanden ist, dann wird "et al." hinzugefügt -->
   <xsl:template match="b:Author" mode="AuthorNamelistVeryShort">
-    <xsl:for-each select="b:NameList/b:Person/b:Last">
+    <xsl:for-each select="b:NameList/b:Person">
       <xsl:choose>
         <!--Wenn die Liste mehr als einen Autor enthält-->
         <xsl:when test="last() > 1">
           <xsl:choose>
-
             <!--Wenn die Position = 1 ist, wird der Autor geschrieben-->
             <xsl:when test="position() = 1">
               <xsl:apply-templates select="."/>
-            </xsl:when>		    
-			<!--Wenn die Position = 2 ist, wird " und" geschrieben-->
-			<xsl:when test="last() = 2">
-              <xsl:text> und </xsl:text>
-			  <xsl:apply-templates select="."/>
             </xsl:when>
-            <xsl:when test="position() = 3">
+            <!--Wenn die Position = 2 ist, wird " et al." geschrieben-->
+            <xsl:when test="position() = 2">
               <xsl:text> et al.</xsl:text>
             </xsl:when>
             <!--Sonst passiert nichts!-->
@@ -789,9 +741,6 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     </xsl:for-each>
     <xsl:value-of select="b:Corporate"/>
   </xsl:template>
-  
-  
-
 
   <!--### Abschnitt 6: Hier wird festgelegt, wie der Name einer Einzelnen Person aufgebaut ist.###-->
   <!-- Beispiel: "Vorname Vorname2 Nachname" -->
