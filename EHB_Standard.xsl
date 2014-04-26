@@ -521,7 +521,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 	<!-- ATTRIBUT text-align: left; ??-->
 		<span style="font-weight: bold; ">
 			<!--Autorenliste-->
-			<xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
+			<xsl:apply-templates select="b:Author/b:Author" mode="AuthorBiblography" />
 			<xsl:text> (</xsl:text>
 			<xsl:value-of select = "b:Year"/>
 			<xsl:text>)</xsl:text>
@@ -544,7 +544,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     <p style="font-family: Times New Roman; font-size: 12pt;">
 		<span style="font-weight: bold; ">
 		  <!--Autorenliste-->
-		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
+		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorBiblography" />
 		  <xsl:text> (</xsl:text>
 		  <xsl:value-of select = "b:Year"/>
 		  <xsl:text>)</xsl:text>
@@ -571,7 +571,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     <p style="font-family: Times New Roman; font-size: 12pt;">
       <span style="font-weight: bold;">
 		  <!--Autorenliste-->
-		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
+		  <xsl:apply-templates select="b:Author/b:Author" mode="AuthorBiblography" />
 		  <xsl:if test="b:Year != ''">
 			  <xsl:text> (</xsl:text>
 			  <xsl:value-of select = "b:Year"/>
@@ -674,7 +674,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
       <body>	
 	  	<xsl:text>(</xsl:text>
 		<span>
-			<xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistShort" />
+			<xsl:apply-templates select="b:Author/b:Author" mode="AuthorCitation" />
 			<xsl:text> </xsl:text>
 			<xsl:value-of select = "b:Year"/>
 		</span>
