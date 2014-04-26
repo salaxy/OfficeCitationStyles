@@ -742,28 +742,30 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 	<!-- (Meier und Müller 2011) und (Meier et al. 2011, S. 45) -->
   <xsl:template match="b:Author" mode="AuthorCitation">
     <xsl:for-each select="b:NameList/b:Person">
-      <xsl:choose>
-        <xsl:when test="position() = 3">
-          <xsl:choose>
-            <xsl:when test="last() > 3">
-              <xsl:text>et al.</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:apply-templates select="." mode="Citation"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:when>
-        <xsl:when test="position() > 3">
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates select="." mode="Citation"/>
-          <xsl:if test="position() != last()">
-            <xsl:text>und </xsl:text>
-          </xsl:if>
-        </xsl:otherwise>
+		<xsl:choose>
+			<xsl:when test="last() > 3">
+			    <xsl:choose>
+					<xsl:when test="position() = 1">
+						<xsl:apply-templates select="." mode="Citation"/>
+					</xsl:when>
+					<xsl:when test="position() = 2">
+						<xsl:text> et al.</xsl:text>
+					</xsl:when>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:choose>
+					<xsl:when test="position() = 1">
+						<xsl:apply-templates select="." mode="Citation"/>
+					</xsl:when>
+					<xsl:when test="position() = 2">
+						<xsl:text> und </xsl:text>
+						<xsl:apply-templates select="." mode="Citation"/>
+					</xsl:when>
+				</xsl:choose>
+			</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-    <!--xsl:value-of select="b:Last"/-->
   </xsl:template>
   
   <!-- Lange Autorenliste für Quellverzeichnis-->
@@ -804,7 +806,6 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     </xsl:for-each>
     <xsl:value-of select="b:Corporate"/>
   </xsl:template>
-  
 
 
   <!--### Abschnitt 6: Hier wird festgelegt, wie der Name einer Einzelnen Person aufgebaut ist.###-->
@@ -820,17 +821,17 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     </xsl:if>
   </xsl:template>
   
-    <xsl:template match="b:Person" mode="Bibliography">
-	   <xsl:variable name="vLower" select="'abcdefghijklmnopqrstuvwxyz'"/>
-		<xsl:variable name="vUpper" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
-		<xsl:if test="b:Last != ''">
-		  <xsl:value-of select = "b:Last"/>
-		</xsl:if>
-		<xsl:if test="b:First != ''">
+  <xsl:template match="b:Person" mode="Bibliography">
+	<xsl:variable name="vLower" select="'abcdefghijklmnopqrstuvwxyz'"/>
+	<xsl:variable name="vUpper" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
+	<xsl:if test="b:Last != ''">
+		<xsl:value-of select = "b:Last"/>
+	</xsl:if>
+	<xsl:if test="b:First != ''">
 		<xsl:text> </xsl:text>
-		 <xsl:value-of select="substring(.,1,1)"/>
-  		<xsl:text>.</xsl:text>
-		</xsl:if>
+		<xsl:value-of select="substring(.,1,1)"/>
+		<xsl:text>.</xsl:text>
+	</xsl:if>
   </xsl:template>
 
   <xsl:template match = "text()"/>
