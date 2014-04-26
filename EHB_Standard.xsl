@@ -730,10 +730,50 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
         <xsl:otherwise>
           <xsl:apply-templates select="."/>
           <xsl:if test="position() != last()">
-            <xsl:text>, </xsl:text>
+            <xsl:text>und </xsl:text>
           </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
+    </xsl:for-each>
+    <xsl:value-of select="b:Corporate"/>
+  </xsl:template>
+  
+    <!-- Kurze Autorenliste (wenn mehr als 3 Autoren vorhanden sind, dann wird "et al." hinzugefügt)-->
+	<!-- (Meier und Müller 2011) und (Meier et al. 2011, S. 45) -->
+  <xsl:template match="b:Author" mode="AuthorCitation">
+    <xsl:for-each select="b:NameList/b:Person">
+      <xsl:choose>
+        <xsl:when test="position() = 3">
+          <xsl:choose>
+            <xsl:when test="last() > 3">
+              <xsl:text>et al.</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="."/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+        <xsl:when test="position() > 3">
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="."/>
+          <xsl:if test="position() != last()">
+            <xsl:text>und </xsl:text>
+          </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    <xsl:value-of select="b:Corporate"/>
+  </xsl:template>
+  
+  <!-- Lange Autorenliste für Quellverzeichnis-->
+  <!-- Borgers A.; Borgers C.; Bremer-Roth Dr. F.; Cleve Dr. F. (2011): -->
+  <xsl:template match="b:Author" mode="AuthorBiblography">
+    <xsl:for-each select="b:NameList/b:Person">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position() != last()">
+        <xsl:text>; </xsl:text>
+      </xsl:if>
     </xsl:for-each>
     <xsl:value-of select="b:Corporate"/>
   </xsl:template>
