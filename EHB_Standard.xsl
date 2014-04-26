@@ -692,7 +692,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
   <!-- Vollständige Interviewpartnerliste -->
   <xsl:template match="b:Interviewee" mode="IntervieweeNamelistFull">
     <xsl:for-each select="b:NameList/b:Person">
-      <xsl:apply-templates select="."/>
+      <xsl:apply-templates select="." mode="Citation"/>
       <xsl:if test="position() != last()">
         <xsl:text>, </xsl:text>
       </xsl:if>
@@ -703,7 +703,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
   <!-- Vollständige Autorenliste -->
   <xsl:template match="b:Author" mode="AuthorNamelistFull">
     <xsl:for-each select="b:NameList/b:Person">
-      <xsl:apply-templates select="."/>
+      <xsl:apply-templates select="." mode="Bibliography"/>
       <xsl:if test="position() != last()">
         <xsl:text>; </xsl:text>
       </xsl:if>
@@ -721,14 +721,14 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
               <xsl:text>et al.</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:apply-templates select="."/>
+              <xsl:apply-templates select="." mode="Citation"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>
         <xsl:when test="position() > 3">
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="."/>
+          <xsl:apply-templates select="." mode="Citation"/>
           <xsl:if test="position() != last()">
             <xsl:text>und </xsl:text>
           </xsl:if>
@@ -749,14 +749,14 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
               <xsl:text>et al.</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:apply-templates select="b:Author/b:Author/b:Person/b:Last"/>
+              <xsl:apply-templates select="." mode="Citation"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>
         <xsl:when test="position() > 3">
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="."/>
+          <xsl:apply-templates select="." mode="Citation"/>
           <xsl:if test="position() != last()">
             <xsl:text>und </xsl:text>
           </xsl:if>
@@ -770,7 +770,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
   <!-- Borgers A.; Borgers C.; Bremer-Roth Dr. F.; Cleve Dr. F. (2011): -->
   <xsl:template match="b:Author" mode="AuthorBiblography">
     <xsl:for-each select="b:NameList/b:Person">
-      <xsl:apply-templates select="."/>
+      <xsl:apply-templates select="." mode="Bibliography"/>
       <xsl:if test="position() != last()">
         <xsl:text>; </xsl:text>
       </xsl:if>
@@ -787,7 +787,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
           <xsl:choose>
             <!--Wenn die Position = 1 ist, wird der Autor geschrieben-->
             <xsl:when test="position() = 1">
-              <xsl:apply-templates select="."/>
+              <xsl:apply-templates select="." mode="Citation"/>
             </xsl:when>
             <!--Wenn die Position = 2 ist, wird " et al." geschrieben-->
             <xsl:when test="position() = 2">
@@ -798,7 +798,7 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
         </xsl:when>
         <!--Sonst wird einfach nur der Autor geschrieben-->
         <xsl:otherwise>
-          <xsl:apply-templates select="."/>
+          <xsl:apply-templates select="." mode="Citation"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -807,13 +807,18 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 
   <!--### Abschnitt 6: Hier wird festgelegt, wie der Name einer Einzelnen Person aufgebaut ist.###-->
   <!-- Beispiel: "Vorname Vorname2 Nachname" -->
-  <xsl:template match="b:PersonCitation">
+  <xsl:template match="b:Person" mode="Citation">
+    <xsl:if test="b:Last != ''">
+      <xsl:value-of select = "b:Last"/>
+    </xsl:if>
+  </xsl:template>
+    <xsl:template match="b:Person">
     <xsl:if test="b:Last != ''">
       <xsl:value-of select = "b:Last"/>
     </xsl:if>
   </xsl:template>
   
-    <xsl:template match="b:Person">
+    <xsl:template match="b:Person" mode="Bibliography">
 		<xsl:if test="b:Last != ''">
 		  <xsl:value-of select = "b:Last"/>
 		</xsl:if>
