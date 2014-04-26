@@ -667,30 +667,21 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
 
   <!--### Abschnitt 4: Hier wird festgelegt, wie einzelne Zitate ausgegeben werden.###-->
 
+  <!-- (Meier 2011, S. 3)-->
+  <!--xsl:value-of select = "b:Author"/-->
   <xsl:template match = "b:Citation/b:Source">
     <html xmlns = "http://www.w3.org/TR/REC-html40">
-      <body>
-        <span>
-		  <xsl:text>(</xsl:text>
-          <xsl:text>[</xsl:text>
-          <xsl:value-of select = "b:Tag"/>
-          <xsl:text>]</xsl:text>
-        </span>
-        <!-- Anschließend kommen der/die Autoren-->
-        <!--Anmerkung: Wie die Liste genau aufgebaut ist, steht in Abschnitt 5 -->
-        <!--<xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistVeryShort" /> -->
-        <!-- <xsl:apply-templates select="b:Author/b:Interviewee" mode="AuthorNamelistVeryShort" /> -->
-        <!--Schließlich kommt das Datum-->
-        <!-- <xsl:text>, </xsl:text> -->
-        <!-- <xsl:value-of select = "b:Year"/> -->
-        <!--und noch die Seiten, wenn sie angegeben wurden-->
-				
-      <!--xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" /-->
-      <xsl:text>: </xsl:text>
-        <xsl:if test="../b:Pages != ''">
-          <xsl:text>, S. </xsl:text>
-          <xsl:value-of select = "../b:Pages"/>
-        </xsl:if>
+      <body>	
+	  	<xsl:text>(</xsl:text>
+		<span>
+			<xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistShort" />
+			<xsl:text> </xsl:text>
+			<xsl:value-of select = "b:Year"/>
+		</span>
+		<xsl:if test="../b:Pages != ''">
+			<xsl:text>, S. </xsl:text>
+			<xsl:value-of select = "../b:Pages"/>
+		</xsl:if>
 		<xsl:text>)</xsl:text>
       </body>
     </html>
