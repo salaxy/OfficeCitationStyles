@@ -518,25 +518,21 @@
 Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
   <xsl:template match = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
     <p style="font-family: Times New Roman; font-size: 12pt;">
-      <span style="font-weight: bold; ">
-        <xsl:text>[</xsl:text>
-        <xsl:value-of select = "b:Year"/>
-        <xsl:text>] </xsl:text>
-      </span>
-      <!--Autorenliste-->
-      <xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
-      <xsl:text>: </xsl:text>
-	  <xsl:text> (</xsl:text>
-	  <xsl:value-of select = "b:Year"/>
-	  <xsl:text>)</xsl:text>
-      <!--Titel-->
-      <xsl:value-of select = "b:Title"/>
-      <!--Datum-->
-      <xsl:text> (</xsl:text>
-      <xsl:value-of select = "b:City"/>
-      <xsl:text>, </xsl:text>
-      <xsl:value-of select = "b:Year"/>
-      <xsl:text>).</xsl:text>
+		<span style="font-weight: bold; ">
+			<!--Autorenliste-->
+			<xsl:apply-templates select="b:Author/b:Author" mode="AuthorNamelistFull" />
+			<xsl:text> (</xsl:text>
+			<xsl:value-of select = "b:Year"/>
+			<xsl:text>)</xsl:text>
+		</span>
+		<xsl:text>: </xsl:text>
+		<xsl:value-of select = "b:Title"/>
+		<xsl:text>. </xsl:text>
+		<xsl:if test="b:City != ''">
+			<xsl:value-of select = "b:City"/>
+			<xsl:text>: </xsl:text>
+		</xsl:if>
+		<xsl:value-of select = "b:Publisher"/>
     </p>
   </xsl:template>
   
