@@ -25,7 +25,7 @@
 
   <!--Hier wird der Name festgelegt, der in Word 2007 erscheinen soll -->
   <xsl:template match = "b:StyleName">
-    <xsl:text>EHB Standard</xsl:text>
+    <xsl:text>EHB Standard fuer Resi</xsl:text>
   </xsl:template>
 
 
@@ -614,25 +614,8 @@ Theorie des systemischen Gleichgewichts. 2. erw. Aufl., Bern: Huber-->
     <html xmlns = "http://www.w3.org/TR/REC-html40">
       <body>
         <!--Zuerst kommen Bücher, Berichte und Elektronische Quellen-->
-		<xsl:if test="b:Source[b:SourceType = 'Book'] != '' or b:Source[b:SourceType = 'Report'] != '' or b:Source[b:SourceType = 'ElectronicSource'] != ''">
-			<p style="font-family: Times New Roman; font-size: 12pt; font-weight: bold; font-style: italic;">
-				<span>
-					<xsl:text>Bücherquellen</xsl:text>
-				</span>
-			</p>
-			<xsl:apply-templates select = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
-				<xsl:sort select="b:Author" order="ascending"/>
-			</xsl:apply-templates>
-		</xsl:if>
-		
-		<!-- Artikel-->
-		<xsl:if test="b:Source[b:SourceType = 'Article'] != '' or b:Source[b:SourceType = 'ArticleInAPeriodical'] != ''">
-			<p style="font-family: Times New Roman; font-size: 12pt; font-weight: bold; font-style: italic;">
-				<span>
-					<xsl:text>Artikel</xsl:text>
-				</span>
-			</p>
-			<xsl:apply-templates select = "b:Source[b:SourceType = 'Article'] | b:Source[b:SourceType = 'ArticleInAPeriodical'] ">
+		<xsl:if test="b:Source[b:SourceType = 'Book'] != '' or b:Source[b:SourceType = 'Report'] != '' or b:Source[b:SourceType = 'ElectronicSource'] != ''or b:Source[b:SourceType = 'Article'] != '' or b:Source[b:SourceType = 'ArticleInAPeriodical'] != ''or b:Source[b:SourceType = 'Interview'] != '' ">
+			<xsl:apply-templates select = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource'] | b:Source[b:SourceType = 'Article'] | b:Source[b:SourceType = 'ArticleInAPeriodical'] | b:Source[b:SourceType = 'Interview']">
 				<xsl:sort select="b:Author" order="ascending"/>
 			</xsl:apply-templates>
 		</xsl:if>
