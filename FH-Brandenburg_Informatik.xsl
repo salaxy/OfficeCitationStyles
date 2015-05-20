@@ -20,7 +20,7 @@
 
   <!-- Hier kann eine Versionsnummer für das gesamte Dokument gesetzt werden (Optional)-->
   <xsl:template match = "b:version">
-    <xsl:text>Version 1.0</xsl:text>
+    <xsl:text>Version 1.1</xsl:text>
   </xsl:template>
 
   <!--Hier wird der Name festgelegt, der in Word 2007 erscheinen soll -->
@@ -489,7 +489,7 @@
   <!--So werden Interviews ausgegeben -->
   <!--Anmerkung: Das Feld "Sender"wurde hier benutzt, um die Position im Unternehmen zu beschreiben)-->
   <xsl:template match = "b:Source[b:SourceType = 'Interview']">
-    <p style="font-family: Times New Roman; font-size: 12pt;">
+    <p style="font-family: Times New Roman; font-size: 11pt;">
       <span style="font-weight: bold; ">
         <xsl:text>[</xsl:text>
         <xsl:value-of select = "b:Tag"/>
@@ -516,7 +516,7 @@
 
   <!--So werden Bücher, Berichte und elektronische Quellen ausgegeben -->
   <xsl:template match = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
-    <p style="font-family: Times New Roman; font-size: 12pt;">
+    <p style="font-family: Times New Roman; font-size: 11pt;">
       <span style="font-weight: bold; ">
         <xsl:text>[</xsl:text>
         <xsl:value-of select = "b:Tag"/>
@@ -538,7 +538,7 @@
 
   <!--So werden Webseiten und Dokumente von Webseiten ausgegeben -->
   <xsl:template match = "b:Source[b:SourceType = 'InternetSite'] | b:Source[b:SourceType = 'DocumentFromInternetSite']">
-    <p style="font-family: Times New Roman; font-size: 12pt;">
+    <p style="font-family: Times New Roman; font-size: 11pt;">
       <span style="font-weight: bold;">
         <xsl:text>[</xsl:text>
         <xsl:value-of select = "b:Tag"/>
@@ -597,32 +597,32 @@
     <html xmlns = "http://www.w3.org/TR/REC-html40">
       <body>
         <!--Zuerst kommen Bücher, Berichte und Elektronische Quellen-->
-		<xsl:if test="b:Source[b:SourceType = 'Book'] != '' or b:Source[b:SourceType = 'Report'] != '' or b:Source[b:SourceType = 'ElectronicSource'] != ''">
-			<p style="font-family: Times New Roman; font-size: 12pt; font-weight: bold; font-style: italic;">
+		<xsl:if test="b:Source[b:SourceType = 'Book'] != '' or b:Source[b:SourceType = 'Report'] != '' ">
+			<p style="font-family: Times New Roman; font-size: 11pt; font-weight: bold; font-style: italic;">
 				<span>
 					<xsl:text>Bücherquellen</xsl:text>
 				</span>
 			</p>
-			<xsl:apply-templates select = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] | b:Source[b:SourceType = 'ElectronicSource']">
+			<xsl:apply-templates select = "b:Source[b:SourceType = 'Book'] | b:Source[b:SourceType = 'Report'] ">
 				<xsl:sort select="b:Tag" order="ascending"/>
 			</xsl:apply-templates>
 		</xsl:if>
 		
         <!--Anschließend sind Onlinequellen dran-->
-		<xsl:if test="b:Source[b:SourceType = 'InternetSite'] != '' or b:Source[b:SourceType = 'DocumentFromInternetSite'] != ''">
-			<p style="font-family: Times New Roman; font-size: 12pt; font-weight: bold; font-style: italic;">
+		<xsl:if test="b:Source[b:SourceType = 'InternetSite'] != '' or b:Source[b:SourceType = 'DocumentFromInternetSite'] != '' or b:Source[b:SourceType = 'ElectronicSource'] != ''">
+			<p style="font-family: Times New Roman; font-size: 11pt; font-weight: bold; font-style: italic;">
 				<span>
 					<xsl:text>Internetquellen</xsl:text>
 				</span>
 			</p>
-			<xsl:apply-templates select = "b:Source[b:SourceType = 'InternetSite'] | b:Source[b:SourceType = 'DocumentFromInternetSite']">
+			<xsl:apply-templates select = "b:Source[b:SourceType = 'InternetSite'] | b:Source[b:SourceType = 'DocumentFromInternetSite'] | b:Source[b:SourceType = 'ElectronicSource']">
 				<xsl:sort select="b:Tag" order="ascending"/>
 			</xsl:apply-templates>
 		</xsl:if>
 
         <!--Zum Schluss kommen noch Interviews-->
 		<xsl:if test="b:Source[b:SourceType = 'Interview'] != ''">
-			<p style="font-family: Times New Roman; font-size: 12pt; font-weight: bold; font-style: italic;">
+			<p style="font-family: Times New Roman; font-size: 11pt; font-weight: bold; font-style: italic;">
 				<span>
 					<xsl:text>Interviewquellen</xsl:text>
 				</span>
@@ -642,10 +642,10 @@
     <html xmlns = "http://www.w3.org/TR/REC-html40">
       <body>
         <span>
-		  <xsl:text>(</xsl:text>
-          <xsl:text>[</xsl:text>
+		  <xsl:text>[</xsl:text>
+          <!-- <xsl:text>[</xsl:text>-->
           <xsl:value-of select = "b:Tag"/>
-          <xsl:text>]</xsl:text>
+          <!-- <xsl:text>]</xsl:text>-->
         </span>
         <!-- Anschließend kommen der/die Autoren-->
         <!--Anmerkung: Wie die Liste genau aufgebaut ist, steht in Abschnitt 5 -->
@@ -659,7 +659,7 @@
           <xsl:text>, S. </xsl:text>
           <xsl:value-of select = "../b:Pages"/>
         </xsl:if>
-		<xsl:text>)</xsl:text>
+		<xsl:text>]</xsl:text>
       </body>
     </html>
   </xsl:template>
