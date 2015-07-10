@@ -20,7 +20,7 @@
 
   <!-- Hier kann eine Versionsnummer für das gesamte Dokument gesetzt werden (Optional)-->
   <xsl:template match = "b:version">
-    <xsl:text>Version 1.1</xsl:text>
+    <xsl:text>Version 1.3</xsl:text>
   </xsl:template>
 
   <!--Hier wird der Name festgelegt, der in Word 2007 erscheinen soll -->
@@ -528,11 +528,11 @@
       <!--Titel-->
       <xsl:value-of select = "b:Title"/>
       <!--Datum-->
-      <xsl:text> (</xsl:text>
-      <xsl:value-of select = "b:City"/>
+	  <xsl:text>. </xsl:text>
+	  <xsl:value-of select = "b:Publisher"/>
       <xsl:text>, </xsl:text>
       <xsl:value-of select = "b:Year"/>
-      <xsl:text>).</xsl:text>
+      <xsl:text>.</xsl:text>
     </p>
   </xsl:template>
 
@@ -551,7 +551,7 @@
       <xsl:value-of select = "b:Title"/>
       <!--Datum-->
 	  <xsl:if test="b:Year != ''">
-	    <xsl:text> (</xsl:text>
+	    <xsl:text>, </xsl:text>
 		<xsl:if test="b:Day != ''">
 			<xsl:value-of select = "b:Day"/>
 			<xsl:text>.</xsl:text>
@@ -561,19 +561,19 @@
 			<xsl:text>.</xsl:text>
 		</xsl:if>
 		<xsl:value-of select = "b:Year"/>
-		<xsl:text>) </xsl:text>
+		<xsl:text>. </xsl:text>
 	  </xsl:if>
       <br />
       <!--URL-->
       <span>
-        <xsl:text>[</xsl:text>
+        <xsl:text>URL: </xsl:text>
         <xsl:value-of select = "b:URL"/>
-        <xsl:text>]</xsl:text>
+        <xsl:text>, </xsl:text>
       </span>
       <!--Zugriffs-Datum-->
       <span>
 	  <xsl:if test="b:YearAccessed != ''">
-	    <xsl:text> (Zugriff: </xsl:text>
+	    <xsl:text> [Zugriff: </xsl:text>
 		<xsl:if test="b:DayAccessed != ''">
 			<xsl:value-of select = "b:DayAccessed"/>
 			<xsl:text>.</xsl:text>
@@ -583,7 +583,7 @@
 			<xsl:text>.</xsl:text>
 		</xsl:if>
 		<xsl:value-of select = "b:YearAccessed"/>
-		<xsl:text>)</xsl:text>
+		<xsl:text>]</xsl:text>
 	  </xsl:if>
 	  <xsl:text>.</xsl:text>
       </span>
